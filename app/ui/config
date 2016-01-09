@@ -1,0 +1,13 @@
+{
+	".url": {
+		“com.absoft.GitBucket”: {
+			"type": "url",
+			"allUsers": true,
+			"title": “GitBucket”,
+			"icon": “images/icon_{0}.png",
+			"protocol": "http",
+			"url": "/",
+			"port": “7990”
+		}
+	}
+}
