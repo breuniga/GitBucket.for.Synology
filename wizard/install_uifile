@@ -1,0 +1,15 @@
+[{
+	"step_title": "Install GitBucket",
+	"items": [{
+		"type": "textfield",
+		"desc": "Create a folder to store the repositories.",
+		"subitems": [{
+			"key": "gitbucket_folder_name",
+			"desc": "GitBucket folder name",
+			"defaultValue": "gitbucket",
+			"validator": {
+					"minLength": 3
+			}
+		}]
+	}]
+}]

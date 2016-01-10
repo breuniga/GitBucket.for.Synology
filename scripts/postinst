@@ -1,2 +1,14 @@
 #!/bin/sh
-exit 0
+
+FOLDER=${gitbucket_folder_name:-gitbucket}
+VOLUME=$(servicetool --get-alive-volume)
+synoshare --get $FOLDER
+if [ $? -ne 0 ]; then
+	synoshare --add "$FOLDER" "GitBucket data and repositories" "/${VOLUME}/${FOLDER}" "" "admin" "" 0 0
+	RESULT=$?
+else
+	# TODO: Volume shoud be retrieved from synoshare --get
+	RESULT=0
+fi
+sed -i "s#GITBUCKET_HOME=.*#GITBUCKET_HOME=/$VOLUME/$FOLDER#" /var/packages/GitBucket/target/etc/gitbucket.conf
+exit $RESULT
