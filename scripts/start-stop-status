@@ -1,12 +1,93 @@
 #!/bin/sh
 
+# Default values
+BASEDIR=/var/packages/GitBucket/target
+GITBUCKET_WAR_FILE=$BASEDIR/gitbucket.war
+JAVA=/var/packages/JavaManager/target/Java/bin/java
+
+source $BASEDIR/etc/gitbucket.conf
+GITBUCKET_HOME=${GITBUCKET_HOME:-$BASEDIR}
+GITBUCKET_PORT=${GITBUCKET_PORT:-8080}
+
+# Location of the log and PID file
+LOGFILE=/var/packages/GitBucket/target/log/gitbucket.log
+TEMP_LOGFILE=${SYNOPKG_TEMP_LOGFILE:-$LOGFILE}
+PID_FILE=/var/run/gitbucket.pid
+
+RETVAL=0
+
+start() {
+	echo -n "" > $LOGFILE
+	echo "Starting GitBucket server: " >> $TEMP_LOGFILE
+
+	START_OPTS=
+	if [ $GITBUCKET_PORT ]; then
+		START_OPTS="${START_OPTS} --port=${GITBUCKET_PORT}"
+	fi
+	if [ $GITBUCKET_PREFIX ]; then
+		START_OPTS="${START_OPTS} --prefix=${GITBUCKET_PREFIX}"
+	fi
+	if [ $GITBUCKET_HOST ]; then
+		START_OPTS="${START_OPTS} --host=${GITBUCKET_HOST}"
+	fi
+
+	GITBUCKET_HOME="$GITBUCKET_HOME" $JAVA $GITBUCKET_JVM_OPTS -jar $GITBUCKET_WAR_FILE $START_OPTS >> $LOGFILE 2>&1 &
+	PID=$!
+	sleep 1
+	while true ; do
+		ps | grep "^\s*$PID" > /dev/null 2>&1
+		RETVAL=$?
+		if [ $RETVAL -ne 0 ] ; then
+			echo "Process $PID vanished" >> $TEMP_LOGFILE
+			break;
+		fi
+		curl -s http://localhost:$GITBUCKET_PORT > /dev/null 2>&1
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ] ; then
+			break;
+		fi
+		sleep 1
+	done
+
+	if [ $RETVAL -eq 0 ] ; then
+		echo $PID > $PID_FILE
+		echo "Success" >> $TEMP_LOGFILE
+	else
+		echo "Exit code $RETVAL" >> $TEMP_LOGFILE
+	fi
+}
+
+
+stop() {
+	echo "Stopping GitBucket server: " >> $TEMP_LOGFILE
+
+	# Run the Java process
+	kill $(cat $PID_FILE 2>/dev/null) >> $TEMP_LOGFILE 2>&1
+	RETVAL=$?
+
+	if [ $RETVAL -eq 0 ] ; then
+		rm -f $PID_FILE
+		echo "GitBucket stopped" >> $TEMP_LOGFILE
+	else
+		echo "Stopping GitBucket failed" >> $TEMP_LOGFILE
+	fi
+}
+
+
+restart() {
+	stop
+	start
+}
+
+RETVAL=1
+
 case "$1" in
 	start)
-		exit 0
+		start
 	;;
 
 	stop)
-		exit 0
+		stop
 	;;
 
 	status)
@@ -18,6 +99,7 @@ case "$1" in
 	;;
 
 	*)
-		exit 1
+		RETVAL=1
 	;;
 esac
+exit $RETVAL

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Gitbucket Synology Package" basedir="." default="spk" xmlns:syno="antlib:net.filebot.ant.spk">
-
+	<taskdef uri="antlib:net.filebot.ant.spk" resource="net/filebot/ant/spk/antlib.xml">
+		<classpath>
+			<fileset dir="lib">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
 	<property name="package" value="GitBucket" />
-	<property name="version" value="0.1" />
+	<property name="version" value="0.1-02" />
 
 	<target name="spk">
 
@@ -13,23 +19,23 @@
 			<info name="maintainer" value="achim.breunig@web.de" />
 			<!-- info name="maintainer_url" value="https://github.com/rednoah/ant-spk" /-->
 
-			<info name="dsmappname" value="org.example.HelloWorld" />
-			<info name="dsmuidir" value="dsm" />
+			<info name="dsmappname" value="com.absoft.GitBucket" />
+			<info name="dsmuidir" value="ui" />
 
-			<icon size="72" file="app/dsm/images/icon_72.png" />
-			<icon size="256" file="app/dsm/images/icon_256.png" />
+			<info name="adminport" value="8080" />
 
-			<wizard dir="spk/wizard" />
-			<scripts dir="spk/scripts" filemode="755" />
+			<icon size="72" file="app/ui/images/icon_72.png" />
+			<icon size="256" file="app/ui/images/icon_256.png" />
+
+			<wizard dir="wizard" />
+			<scripts dir="scripts" filemode="755" />
 
 			<package dir="app" includes="**/*.sh" filemode="755" />
 			<package dir="app" excludes="**/*.sh" />
 
-			<codesign keyid="D545C93D" secring="gpg/secring.gpg" password="" />
 		</syno:spk>
 
 		<syno:package-source file="dist/spksrc.json">
-			<keyring file="gpg/alice.pub" />
 			<spk file="dist/${package}-${version}-noarch.spk">
 				<info name="link" value="http://packages.example.org/${package}-${version}-noarch.spk" />
 				<thumbnail url="http://images.example.org/${package}/thumbnail.png" />
