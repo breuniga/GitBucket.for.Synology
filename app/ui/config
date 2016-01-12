@@ -1,12 +1,12 @@
 {
 	".url": {
-		“com.absoft.GitBucket”: {
+		"com.absoft.GitBucket": {
 			"type": "url",
-			"title": “GitBucket”,
-			"icon": “images/icon_{0}.png",
+			"title": "GitBucket",
+			"icon": "images/icon_{0}.png",
 			"protocol": "http",
 			"url": "/",
-			"port": “8080”
+			"port": "8080"
 		}
 	}
 }
