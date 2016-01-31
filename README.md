@@ -1,4 +1,2 @@
-gitbucket
-===============
-
-GitBucket packaged for Synology NAS
+# GitBucket.for.Synology
+GitBucket packaged for the Sinology NAS
