@@ -3,6 +3,8 @@
 [GitBucket](https://github.com/gitbucket/gitbucket) is a GitHub clone powered by Scala which has easy installation and high extensibility.
 
 GitBucket.for.Synology packages the gitbucket.war file from https://github.com/gitbucket/gitbucket into a spk-package for installation in the Synology NAS.
+## GitBucket's license
+see https://github.com/takezoe/gitbucket
 
 ## Installation
 GitBucket requires Java installed on the Synology NAS. You can install Java7 via the Java Manager from Synology Inc.
