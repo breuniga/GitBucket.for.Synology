@@ -8,7 +8,7 @@
 		</classpath>
 	</taskdef>
 	<property name="package" value="GitBucket" />
-	<property name="version" value="3.10-syno-01" />
+	<property name="version" value="3.10.1_h2-1.4.180_syno-01" />
 
 	<target name="spk">
 
