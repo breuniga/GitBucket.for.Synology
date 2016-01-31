@@ -8,7 +8,7 @@
 		</classpath>
 	</taskdef>
 	<property name="package" value="GitBucket" />
-	<property name="version" value="0.1-02" />
+	<property name="version" value="3.10-syno-01" />
 
 	<target name="spk">
 
@@ -17,7 +17,6 @@
 			<info name="description" value="GitBucket packaged for Synology NAS" />
 
 			<info name="maintainer" value="achim.breunig@web.de" />
-			<!-- info name="maintainer_url" value="https://github.com/rednoah/ant-spk" /-->
 
 			<info name="dsmappname" value="com.absoft.GitBucket" />
 			<info name="dsmuidir" value="ui" />
@@ -37,9 +36,6 @@
 
 		<syno:package-source file="dist/spksrc.json">
 			<spk file="dist/${package}-${version}-noarch.spk">
-				<info name="link" value="http://packages.example.org/${package}-${version}-noarch.spk" />
-				<thumbnail url="http://images.example.org/${package}/thumbnail.png" />
-				<snapshot url="http://images.example.org/${package}/screenshot.png" />
 			</spk>
 		</syno:package-source>
 
