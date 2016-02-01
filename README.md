@@ -9,7 +9,7 @@ see https://github.com/takezoe/gitbucket
 ## Installation
 GitBucket requires Java installed on the Synology NAS. You can install Java7 via the Java Manager from Synology Inc.
 
-1. Download the latest release
+1. Download the latest [release](https://github.com/breuniga/GitBucket.for.Synology/releases/tag/v3.10.1_h2-1.4.180_syno-01)
 2. Login to your Synology NAS with administrator rights
 3. Open the Package Manager
 4. Click on *Manual Install* and select the downloaded package.
